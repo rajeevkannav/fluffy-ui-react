@@ -2,7 +2,7 @@
   "name": "fluffy-ui-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rajeevkannav.com/fluffy-ui-react",
+  "homepage": "https://rajeevkannav.com/fluffy-ui-react/",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
