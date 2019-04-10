@@ -7,8 +7,8 @@ import TodoList from '../components/TodoList'
 
 class Todos extends Component {
 
-    getTodos() {
-        axios.get('http://localhost:3001/api/todos')
+    getTodos(archived) {
+        axios.get(`http://localhost:3001/api/todos?archived=${archived}`)
             .then(response => {
                 this.props.dispatch(loadTodos(response.data));
             })
@@ -17,7 +17,8 @@ class Todos extends Component {
     }
 
     componentDidMount() {
-        this.getTodos()
+        const {archived} = this.props;
+        this.getTodos(archived)
     }
 
     renderContent(todos) {
@@ -35,11 +36,7 @@ class Todos extends Component {
     }
 
     render() {
-        return (
-            <div className="container">
-                {this.renderContent(this.props.todos)}
-            </div>
-        )
+        return this.renderContent(this.props.todos)
     }
 }
 

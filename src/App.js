@@ -1,16 +1,14 @@
-import React, {Component} from 'react';
-import './App.css';
-import Header from './components/Header.js'
+import React, {Component, Fragment} from 'react';
 import TodosContainer from './containers/TodosContainer'
 import SubHeading from './components/SubHeading'
 
 class App extends Component {
     render() {
         return (
-            <div className="container">
+            <Fragment>
                 <SubHeading title='Available Todos'/>
-                <TodosContainer/>
-            </div>
+                <TodosContainer archived={false}/>
+            </Fragment>
         );
     }
 }

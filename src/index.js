@@ -8,23 +8,27 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import './index.css';
 import App from './App';
-import About from './components/About';
+import Archived from './Archived';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import configureStore from './store';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <Header />
         <Router>
-            <Switch>
-                <Route exact path="/" component={App}/>
-                <Route path="/about/" component={About}/>
-            </Switch>
+            <Header/>
+            <div className="container">
+                <Switch>
+                    <Route exact path="/" component={App}/>
+                    <Route path="/archived/" component={Archived}/>
+                </Switch>
+                <Footer/>
+            </div>
         </Router>
     </Provider>
     , document.getElementById('root'));
