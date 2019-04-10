@@ -15,9 +15,8 @@ class TodoItem extends Component {
         return (todo.status === 'finished')
     }
 
-    render() {
-        const {todo} = this.props;
 
+    renderActiveTodo(todo) {
         return (
             <div className="row">
                 <div className="col-md-8">
@@ -38,6 +37,31 @@ class TodoItem extends Component {
                 </div>
             </div>
         )
+    }
+
+    renderArchivedTodo(todo, srIndex) {
+        return (
+            <div className="row">
+                <div className="col-md-8">
+                    {srIndex + 1 }. {todo.title} <span className="badge badge-success">{todo.status}</span>
+                </div>
+
+                <div className="col-md-4">
+                    <a href='#'> Restore </a>
+                </div>
+                <hr className='style4'/>
+            </div>
+
+        )
+    }
+
+    renderTodo(todo) {
+        return (!todo.is_deleted) ? this.renderActiveTodo(todo) : this.renderArchivedTodo(todo, this.props.index)
+    }
+
+    render() {
+        const {todo} = this.props;
+        return this.renderTodo(todo)
     }
 }
 

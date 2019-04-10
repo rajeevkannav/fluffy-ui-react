@@ -6,9 +6,9 @@ class TodoList extends Component {
     render() {
         const {todos} = this.props;
         return (
-            todos.map((todo) => {
+            todos.map((todo, index) => {
                 return (
-                    <TodoItem todo={todo} key={todo.id}/>
+                    <TodoItem todo={todo} key={todo.id} index={index} />
                 )
             })
         );
