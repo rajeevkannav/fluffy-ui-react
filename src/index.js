@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// BOOTSTRAP STUFF
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import './index.css';
 import App from './App';
 import About from './components/About';
@@ -8,11 +13,13 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import configureStore from './store';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Header from "./components/Header";
 
 const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
+        <Header />
         <Router>
             <Switch>
                 <Route exact path="/" component={App}/>
