@@ -21,6 +21,10 @@ class TodoItem extends Component {
         this.props.deleteTodo(id)
     };
 
+    restoreTodo = id => {
+        console.log('inside TodoItem');
+        this.props.restoreTodo(id)
+    };
 
     renderActiveTodo(todo) {
         return (
@@ -34,7 +38,7 @@ class TodoItem extends Component {
 
                         <input type="checkbox"
                                className="pull-left"
-                               defaultChecked={ this.isFinished(todo) }/> {todo.title} {todo.id}
+                               defaultChecked={this.isFinished(todo)}/> {todo.title} {todo.id}
                     </a>
                 </div>
 
@@ -53,11 +57,16 @@ class TodoItem extends Component {
         return (
             <div className="row">
                 <div className="col-md-8">
-                    45. {todo.title} <span className="badge badge-success">{todo.status}</span>
+                    {todo.title}
+                    45. <span className="badge badge-success">{todo.status}</span>
                 </div>
 
                 <div className="col-md-4">
-                    <a href='#'> Restore </a>
+                    <a href='javascript:void(0)'
+                       onClick={(e) => {
+                           this.restoreTodo(todo._id.$oid)
+                       }}>
+                        Restore </a>
                 </div>
                 <hr className='style4'/>
             </div>

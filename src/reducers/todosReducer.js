@@ -1,4 +1,4 @@
-import { LOAD_TODOS, DELETE_TODO, TOGGLE_TODO} from '../actions/actionTypes'
+import { LOAD_TODOS, DELETE_TODO, TOGGLE_TODO, RESTORE_TODO} from '../actions/actionTypes'
 
 function todosReducer(state = [], action)
 {
@@ -8,7 +8,8 @@ function todosReducer(state = [], action)
 
         case DELETE_TODO:
             return state.filter(todo => todo._id.$oid !== action.index);
-
+        case RESTORE_TODO:
+            return state.filter(todo => todo._id.$oid !== action.index);
         case TOGGLE_TODO:
             return state.map(todo => (todo._id.$oid === action.index)
                 ? {...todo, status: action.todoStatus}

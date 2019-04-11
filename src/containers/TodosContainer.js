@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadTodos, toggleTodo, deleteTodo} from '../actions/actionCreators';
+import {loadTodos, toggleTodo, deleteTodo, restoreTodo} from '../actions/actionCreators';
 import TodoList from '../components/TodoList'
 
 
@@ -48,6 +48,26 @@ class Todos extends Component {
             .catch(error => console.log(error))
     }
 
+    restoreTodo = id => {
+        console.log(id)
+
+        var postData = {};
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+
+        axios.patch(`http://localhost:3000/api/todos/${id}/restore`, postData, axiosConfig)
+            .then(response => {
+                this.props.dispatch(deleteTodo(id))
+            })
+            .catch(error => console.log(error))
+
+    };
+
     componentDidMount() {
         const {archived} = this.props;
         this.getTodos(archived)
@@ -55,9 +75,11 @@ class Todos extends Component {
 
     renderContent(todos) {
         if (todos.length > 0) {
-            return <TodoList todos={todos}
-                             deleteTodo={this.deleteTodo}
-                             toggleTodo={this.toggleTodo}/>
+                return <TodoList todos={todos}
+                                 restoreTodo={this.restoreTodo}
+                                 deleteTodo={this.deleteTodo}
+                                 toggleTodo={this.toggleTodo}/>
+
         } else {
             return (
                 <div className="row">
