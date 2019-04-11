@@ -9,12 +9,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
 import App from './App';
 import Archived from './Archived';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import editTodo from "./components/editTodo";
+import attachTags from "./components/attachTags";
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
 import configureStore from './store';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 const store = configureStore();
 
@@ -26,6 +28,8 @@ ReactDOM.render(
                 <Switch>
                     <Route exact path="/" component={App}/>
                     <Route path="/archived/" component={Archived}/>
+                    <Route path="/editTodo/" component={editTodo}/>
+                    <Route path="/attachTags/" component={attachTags}/>
                 </Switch>
                 <Footer/>
             </div>

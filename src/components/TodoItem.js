@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import TagShow from './TagShow';
+import {Link} from "react-router-dom";
+
 class TodoItem extends Component {
 
     constructor(props) {
@@ -49,9 +51,9 @@ class TodoItem extends Component {
 
 
                 <div className="col-md-4">
-                    <a href="/"> Edit </a>
+                    <Link to="/editTodo">Edit</Link>
                     |
-                    <a href="/"> Attach Tag(s) </a>
+                    <Link to="/attachTags">Attach Tag(s)</Link>
                     |
                     <a href="javascript:void(0)" onClick={(e) => this.deleteTodo(todo._id.$oid)}> Delete </a>
                 </div>
