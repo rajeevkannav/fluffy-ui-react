@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import TagShow from './TagShow';
 class TodoItem extends Component {
 
     constructor(props) {
@@ -38,9 +38,15 @@ class TodoItem extends Component {
 
                         <input type="checkbox"
                                className="pull-left"
-                               defaultChecked={this.isFinished(todo)}/> {todo.title} {todo.id}
+                               checked={this.isFinished(todo)}
+                               defaultChecked={false}/> {todo.title} {todo.id}
                     </a>
+                    <div className="row">
+                        <TagShow tagsName={todo.tags.map((tag, index) => {return tag.name}) } />
+                    </div>
+
                 </div>
+
 
                 <div className="col-md-4">
                     <a href="/"> Edit </a>
