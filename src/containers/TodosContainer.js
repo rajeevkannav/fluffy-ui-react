@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadTodos} from '../actions/actionCreators';
+import {loadTodos, toggleTodo, deleteTodo} from '../actions/actionCreators';
 import TodoList from '../components/TodoList'
 
 
@@ -13,7 +13,39 @@ class Todos extends Component {
                 this.props.dispatch(loadTodos(response.data));
             })
             .catch(error => console.log(error))
+    }
 
+
+    toggleTodo = (params) => {
+        var postData = {status: params.status};
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        axios.patch(`http://localhost:3000/api/todos/${params.id}/update_status`, postData, axiosConfig)
+            .then(response => {
+                this.props.dispatch(toggleTodo(params.id, response.data.todo.status));
+            })
+            .catch(error => console.log(error))
+    };
+
+    deleteTodo = (id) => {
+        var postData = {};
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+
+        axios.delete(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
+            .then(response => {
+                this.props.dispatch(deleteTodo(id))
+            })
+            .catch(error => console.log(error))
     }
 
     componentDidMount() {
@@ -23,7 +55,9 @@ class Todos extends Component {
 
     renderContent(todos) {
         if (todos.length > 0) {
-            return <TodoList todos={todos}/>
+            return <TodoList todos={todos}
+                             deleteTodo={this.deleteTodo}
+                             toggleTodo={this.toggleTodo}/>
         } else {
             return (
                 <div className="row">
