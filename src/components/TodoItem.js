@@ -51,11 +51,7 @@ class TodoItem extends Component {
 
 
                 <div className="col-md-4">
-                    <Link to="/editTodo">Edit</Link>
-                    |
-                    <Link to="/attachTags">Attach Tag(s)</Link>
-                    |
-                    <a href="javascript:void(0)" onClick={(e) => this.deleteTodo(todo._id.$oid)}> Delete </a>
+                    <Link to={`/editTodo/${todo._id.$oid}`}>Edit</Link> | <Link to="/attachTags">Attach Tag(s)</Link> | <a href="javascript:void(0)" onClick={(e) => this.deleteTodo(todo._id.$oid)}> Delete </a>
                 </div>
             </div>
         )

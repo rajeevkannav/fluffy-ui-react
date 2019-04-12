@@ -28,8 +28,8 @@ ReactDOM.render(
                 <Switch>
                     <Route exact path="/" component={App}/>
                     <Route path="/archived/" component={Archived}/>
-                    <Route path="/editTodo/" component={editTodo}/>
-                    <Route path="/attachTags/" component={attachTags}/>
+                    <Route path="/editTodo/:id" component={editTodo}/>
+                    <Route path="/attachTags/:id" component={attachTags}/>
                 </Switch>
                 <Footer/>
             </div>

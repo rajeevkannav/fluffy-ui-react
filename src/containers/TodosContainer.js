@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadTodos, toggleTodo, deleteTodo, restoreTodo} from '../actions/actionCreators';
+import {loadTodos, toggleTodo, deleteTodo, restoreTodo, updateTodo, addTodo} from '../actions/actionCreators';
 import TodoList from '../components/TodoList'
+import TodoForm from '../components/TodoForm';
 
 
 class Todos extends Component {
@@ -49,8 +50,6 @@ class Todos extends Component {
     }
 
     restoreTodo = id => {
-        console.log(id)
-
         var postData = {};
 
         let axiosConfig = {
@@ -68,6 +67,25 @@ class Todos extends Component {
 
     };
 
+
+    onSubmit = formValues => {
+
+        var postData = formValues;
+        console.log(postData)
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        axios.post(`http://localhost:3000/api/todos`, postData, axiosConfig)
+            .then(response => {
+                this.props.dispatch(addTodo(response.data.todo));
+            })
+            .catch(error => console.log(error))
+
+    };
+
     componentDidMount() {
         const {archived} = this.props;
         this.getTodos(archived)
@@ -75,10 +93,10 @@ class Todos extends Component {
 
     renderContent(todos) {
         if (todos.length > 0) {
-                return <TodoList todos={todos}
-                                 restoreTodo={this.restoreTodo}
-                                 deleteTodo={this.deleteTodo}
-                                 toggleTodo={this.toggleTodo}/>
+            return <TodoList todos={todos}
+                             restoreTodo={this.restoreTodo}
+                             deleteTodo={this.deleteTodo}
+                             toggleTodo={this.toggleTodo}/>
 
         } else {
             return (
@@ -92,13 +110,27 @@ class Todos extends Component {
     }
 
     render() {
-        return this.renderContent(this.props.todos)
+        if (!this.props.todos) {
+            return (
+                <div className="row">
+                    <div className="col-md-12 alert alert-success" role="alert">
+                        Hooray!!! no todo
+                    </div>
+                </div>
+            )
+        }
+        return (
+            <React.Fragment>
+                {this.renderContent(this.props.todos)}
+                <TodoForm onSubmit={this.onSubmit} />
+            </React.Fragment>
+        )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos
+        todos: state.todos.items
     }
 }
 

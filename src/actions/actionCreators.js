@@ -1,4 +1,12 @@
-import { LOAD_TODOS, TOGGLE_TODO, DELETE_TODO, RESTORE_TODO } from '../actions/actionTypes'
+import {
+    LOAD_TODOS,
+    ADD_TODO,
+    TOGGLE_TODO,
+    DELETE_TODO,
+    RESTORE_TODO,
+    FETCH_TODO,
+    UPDATE_TODO
+} from '../actions/actionTypes'
 
 export function loadTodos(todos) {
     return { type: LOAD_TODOS, todos: todos }
@@ -14,5 +22,16 @@ export function deleteTodo(index) {
 export function restoreTodo(index) {
     return { type: RESTORE_TODO, index: index }
 }
+
+export function fetchTodo(todo) {
+    return { type: FETCH_TODO, todo: todo }
+}
+export function updateTodo(todo) {
+    return { type: UPDATE_TODO, todo: todo }
+}
+export function addTodo(todo) {
+    return { type: ADD_TODO, todo: todo }
+}
+
 
 
