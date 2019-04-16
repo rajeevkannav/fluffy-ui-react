@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadTodos, toggleTodo, deleteTodo, restoreTodo, updateTodo, addTodo} from '../actions/actionCreators';
+import {loadTodos, toggleTodo, deleteTodo, addTodo} from '../actions/actionCreators';
 import TodoList from '../components/TodoList'
 import TodoForm from '../components/TodoForm';
+import SearchTodosByTagForm from '../components/SearchTodosByTagForm';
 
 
 class Todos extends Component {
@@ -122,7 +123,15 @@ class Todos extends Component {
         return (
             <React.Fragment>
                 {this.renderContent(this.props.todos)}
-                <TodoForm onSubmit={this.onSubmit} />
+                <hr className="style5"/>
+                <div className="row">
+                    <div className="col-md-6">
+                        <SearchTodosByTagForm/>
+                    </div>
+                    <div className="col-md-6">
+                        <TodoForm onSubmit={this.onSubmit}/>
+                    </div>
+                </div>
             </React.Fragment>
         )
     }

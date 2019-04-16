@@ -48,6 +48,7 @@ class editTodo extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         if (!this.props.todo.title) {
             return <div>Loading ...</div>
         }
@@ -58,6 +59,7 @@ class editTodo extends React.Component {
                 <div className="row">
                     <div className="col-md-6">
                         <TodoForm initialValues={{title: this.props.todo.title}}
+                                  backButtonRequired={true}
                                   onSubmit={this.onSubmit}/>
                     </div>
                 </div>

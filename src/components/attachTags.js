@@ -18,15 +18,12 @@ class attachTags extends React.Component{
         };
         axios.get(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
             .then(response => {
-                console.log(response.data)
                 this.props.dispatch(fetchTodo(response.data));
             })
             .catch(error => console.log(error))
     }
 
     onSubmit = formValues => {
-        console.log('lalala land');
-        console.log(formValues);
         var postData = {tag: formValues};
         let axiosConfig = {
             headers: {
@@ -37,11 +34,9 @@ class attachTags extends React.Component{
         const {id} = this.props.match.params;
         axios.put(`http://localhost:3000/api/todos/${id}/assign_tags`, postData, axiosConfig)
             .then(response => {
-                console.log(response.data)
                 this.props.dispatch(attachTag(response.data));
             })
             .catch(error => console.log(error))
-
     };
 
 
@@ -77,5 +72,5 @@ const mapStateToProps = (state, ownProps) => {
     return {
         todo: state.todos.editingTodo
     }
-}
+};
 export default connect(mapStateToProps)(attachTags);

@@ -10,7 +10,6 @@ import './index.css';
 import App from './App';
 import Archived from './Archived';
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import editTodo from "./components/editTodo";
 import attachTags from "./components/attachTags";
 import * as serviceWorker from './serviceWorker';
@@ -31,7 +30,6 @@ ReactDOM.render(
                     <Route path="/editTodo/:id" component={editTodo}/>
                     <Route path="/attachTags/:id" component={attachTags}/>
                 </Switch>
-                <Footer/>
             </div>
         </Router>
     </Provider>

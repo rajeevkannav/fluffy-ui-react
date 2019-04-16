@@ -17,6 +17,7 @@ const INITIAL_STATE = {
 function todosReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case LOAD_TODOS:
+            console.log('REducers')
             return {...state, items: action.todos};
         case ADD_TODO:
             return { ...state, items: [...state.items, action.todo] };
