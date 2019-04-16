@@ -1,4 +1,13 @@
-import {LOAD_TODOS, DELETE_TODO, TOGGLE_TODO, RESTORE_TODO, FETCH_TODO, UPDATE_TODO, ADD_TODO} from '../actions/actionTypes'
+import {
+    LOAD_TODOS,
+    DELETE_TODO,
+    TOGGLE_TODO,
+    RESTORE_TODO,
+    FETCH_TODO,
+    UPDATE_TODO,
+    ADD_TODO,
+    ATTACH_TAG
+} from '../actions/actionTypes'
 
 const INITIAL_STATE = {
     items: [],
@@ -24,14 +33,12 @@ function todosReducer(state = INITIAL_STATE, action) {
             return {...state, editingTodo: action.todo};
         case UPDATE_TODO:
             const items = state.items.map(todo => {
-                console.log(todo)
-                console.log(todo._id)
-                console.log(todo._id.$oid)
-                console.log(action.todo._id.$oid)
                 if (todo._id.$oid === action.todo._id.$oid) {
                     return todo;
                 }
             });
+            return {...state, items, editingItem: {}};
+        case ATTACH_TAG:
             return {...state, items, editingItem: {}};
         default:
             return state;

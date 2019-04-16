@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {fetchTodo, toggleTodo, updateTodo} from '../actions/actionCreators'
+import {fetchTodo, updateTodo} from '../actions/actionCreators'
 import SubHeading from '../components/SubHeading';
 import TodoForm from './TodoForm';
-import {Link} from "react-router-dom";
 
 class editTodo extends React.Component {
 

@@ -5,7 +5,8 @@ import {
     DELETE_TODO,
     RESTORE_TODO,
     FETCH_TODO,
-    UPDATE_TODO
+    UPDATE_TODO,
+    ATTACH_TAG
 } from '../actions/actionTypes'
 
 export function loadTodos(todos) {
@@ -33,5 +34,8 @@ export function addTodo(todo) {
     return { type: ADD_TODO, todo: todo }
 }
 
+export function attachTag(todo) {
+    return {type: ATTACH_TAG, todo: todo}
+}
 
 
