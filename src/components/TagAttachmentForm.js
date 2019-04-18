@@ -37,7 +37,7 @@ class TagAttachmentForm extends React.Component {
                     <Field name="name"
                            component={this.renderInput}/>
                 </div>
-                <button className="btn btn-primary col-sm-offset-3">Save</button>
+                <button className="btn btn-primary col-sm-offset-3">Add Tag</button>
                 &nbsp;<Link to={`/`} className='btn btn-primary col-sm-offset-3'>Back</Link>
             </form>
         )

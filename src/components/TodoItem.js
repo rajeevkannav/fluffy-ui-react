@@ -4,10 +4,6 @@ import {Link} from "react-router-dom";
 
 class TodoItem extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     isFinished(todo) {
         return (todo.status === 'finished')
     }
@@ -41,7 +37,9 @@ class TodoItem extends Component {
                         <input type="checkbox"
                                className="pull-left"
                                checked={this.isFinished(todo)}
-                               defaultChecked={false}/> {todo.title} {todo.id}
+                               onChange={(e) => this.toggleStatusTodo(todo)}
+
+                        /> {todo.title} {todo.id}
                     </a>
                     <div className="row">
                         <TagShow tagsName={todo.tags.map((tag, index) => {return tag.name}) } />

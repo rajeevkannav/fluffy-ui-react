@@ -10,8 +10,6 @@ import {
 } from '../actions/actionTypes'
 
 export function loadTodos(todos) {
-    console.log('loadtodos')
-    console.log(todos)
     return { type: LOAD_TODOS, todos: todos }
 }
 

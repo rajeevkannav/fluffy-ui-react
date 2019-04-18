@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import SubHeading from './SubHeading'
 import {fetchTodo, attachTag} from "../actions/actionCreators";
 import TagAttachmentForm from './TagAttachmentForm';
+import history from '../history';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class attachTags extends React.Component{
 
@@ -35,6 +38,8 @@ class attachTags extends React.Component{
         axios.put(`http://localhost:3000/api/todos/${id}/assign_tags`, postData, axiosConfig)
             .then(response => {
                 this.props.dispatch(attachTag(response.data));
+                history.push('/');
+                toast('Tag attached successfully.');
             })
             .catch(error => console.log(error))
     };
@@ -59,8 +64,6 @@ class attachTags extends React.Component{
         return (
             <div>
                 <SubHeading title={'Attach Tags'}/>
-                {this.props.todo.title}
-
                 <TagAttachmentForm onSubmit={this.onSubmit}/>
             </div>
 

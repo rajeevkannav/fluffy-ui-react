@@ -4,6 +4,8 @@ import axios from 'axios';
 import {fetchTodo, updateTodo} from '../actions/actionCreators'
 import SubHeading from '../components/SubHeading';
 import TodoForm from './TodoForm';
+import history from "../history";
+import {toast} from "react-toastify";
 
 class editTodo extends React.Component {
 
@@ -37,6 +39,8 @@ class editTodo extends React.Component {
         axios.patch(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
             .then(response => {
                 this.props.dispatch(updateTodo(response.data));
+                history.push('/');
+                toast('Todo updated successfully.');
             })
             .catch(error => console.log(error))
 

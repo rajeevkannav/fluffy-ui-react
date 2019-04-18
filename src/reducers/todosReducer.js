@@ -17,7 +17,6 @@ const INITIAL_STATE = {
 function todosReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case LOAD_TODOS:
-            console.log('REducers')
             return {...state, items: action.todos};
         case ADD_TODO:
             return { ...state, items: [...state.items, action.todo] };
@@ -33,7 +32,9 @@ function todosReducer(state = INITIAL_STATE, action) {
         case FETCH_TODO:
             return {...state, editingTodo: action.todo};
         case UPDATE_TODO:
+            console.log(action.todo);
             const items = state.items.map(todo => {
+                console.log(todo);
                 if (todo._id.$oid === action.todo._id.$oid) {
                     return todo;
                 }

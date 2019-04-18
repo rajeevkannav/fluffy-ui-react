@@ -1,6 +1,5 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
-import {Link} from "react-router-dom";
 import BackButton from './BackButton'
 
 class TodoForm extends React.Component {
@@ -41,11 +40,12 @@ class TodoForm extends React.Component {
         const {handleSubmit} = this.props;
         return (
             <form className="form-inline" onSubmit={handleSubmit(this.onSubmit)}>
-                <div class="form-group">
+                <div className="form-group">
                     <Field name="title"
                            component={this.renderInput}/>
                 </div>
-                &nbsp; <button className="btn btn-primary col-sm-offset-3" >Add Todo</button>
+                &nbsp;
+                <button className="btn btn-primary col-sm-offset-3">Add Todo</button>
                 {this.backButton()}
             </form>
         )

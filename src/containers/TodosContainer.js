@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {loadTodos, toggleTodo, deleteTodo, addTodo} from '../actions/actionCreators';
+import {reset} from 'redux-form';
+import {loadTodos, toggleTodo, deleteTodo, addTodo, restoreTodo} from '../actions/actionCreators';
 import TodoList from '../components/TodoList'
 import TodoForm from '../components/TodoForm';
 import SearchTodosByTagForm from '../components/SearchTodosByTagForm';
+import {toast} from "react-toastify";
 
 
 class Todos extends Component {
@@ -46,6 +48,7 @@ class Todos extends Component {
         axios.delete(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
             .then(response => {
                 this.props.dispatch(deleteTodo(id))
+                toast('Todo deleted successfully.');
             })
             .catch(error => console.log(error))
     }
@@ -62,17 +65,16 @@ class Todos extends Component {
 
         axios.patch(`http://localhost:3000/api/todos/${id}/restore`, postData, axiosConfig)
             .then(response => {
-                this.props.dispatch(deleteTodo(id))
+                this.props.dispatch(restoreTodo(id))
+                toast('Todo restored successfully.');
             })
             .catch(error => console.log(error))
 
     };
 
 
-    onSubmit = formValues => {
-
+    onSubmit = (formValues, e) => {
         var postData = formValues;
-        console.log(postData)
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -82,6 +84,8 @@ class Todos extends Component {
         axios.post(`http://localhost:3000/api/todos`, postData, axiosConfig)
             .then(response => {
                 this.props.dispatch(addTodo(response.data.todo));
+                toast('Todo created successfully.');
+                this.props.dispatch(reset('TodoForm'));  // requires form name
             })
             .catch(error => console.log(error))
 
@@ -126,7 +130,7 @@ class Todos extends Component {
                 <hr className="style5"/>
                 <div className="row">
                     <div className="col-md-6">
-                        <SearchTodosByTagForm/>
+                        <SearchTodosByTagForm />
                     </div>
                     <div className="col-md-6">
                         <TodoForm onSubmit={this.onSubmit}/>
