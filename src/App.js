@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import TodosContainer from './containers/TodosContainer'
 import SubHeading from './components/SubHeading'
-import toast from './Toast'
 
 class App extends Component {
     render() {

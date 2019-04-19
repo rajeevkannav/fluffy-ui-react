@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, reset} from 'redux-form';
 import BackButton from './BackButton'
 
 class TodoForm extends React.Component {
@@ -26,6 +26,7 @@ class TodoForm extends React.Component {
 
     onSubmit = formValues => {
         this.props.onSubmit(formValues);
+        this.props.dispatch(reset('TodoForm'));
     };
 
 
