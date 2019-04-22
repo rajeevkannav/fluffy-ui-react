@@ -13,13 +13,18 @@ import todos from '../apis/todos';
 import history from '../history';
 
 export const loadTodos = (archived) => async dispatch => {
-    const response = await todos.get(`todos?archived=${archived}`)
+    const response = await todos.get(`todos?archived=${archived}`);
     dispatch({type: LOAD_TODOS, todos: response.data})
 };
 
 export const todosByTag = (tagName) => async dispatch => {
-    const response = await todos.get(`http://localhost:3000/api/tags/${tagName}/todos.json`);
+    const response = await todos.get(`tags/${tagName}/todos.json`);
     dispatch({type: TODOS_BY_TAG, todos: response.data})
+};
+
+export const addTodo = formValues => async dispatch => {
+    const response = await todos.post('todos', formValues);
+    dispatch({type: ADD_TODO, payload: response.data});
 };
 
 export const toggleTodo = (id, status) => async dispatch => {
@@ -47,11 +52,6 @@ export const updateTodo = (id, formvalues) => async dispatch => {
     const response = await todos.patch(`todos/${id}.json`, formvalues);
     dispatch({type: UPDATE_TODO, payload: response.data});
     history.push('/');
-};
-
-export const addTodo = formValues => async dispatch => {
-    const response = await todos.post('todos', formValues);
-    dispatch({type: ADD_TODO, payload: response.data});
 };
 
 export const attachTag = (id, formvalues) => async dispatch => {
