@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loadTodos, toggleTodo, deleteTodo, addTodo, restoreTodo} from '../actions/actionCreators';
-import {reset} from 'redux-form';
 import TodoList from '../components/TodoList'
 import TodoForm from '../components/TodoForm';
 import SearchTodosByTagForm from '../components/SearchTodosByTagForm';
-import {toast} from "react-toastify";
-
 
 class Todos extends Component {
 
@@ -43,6 +40,20 @@ class Todos extends Component {
         }
     }
 
+    renderForms(){
+        if (!this.props.archived){
+            return(
+                <div className="row">
+                    <div className="col-md-6">
+                        <SearchTodosByTagForm/>
+                    </div>
+                    <div className="col-md-6">
+                        <TodoForm onSubmit={this.onSubmit} submitButtonTitle='Add Todo'/>
+                    </div>
+                </div>
+            )
+        }
+    }
     render() {
         if (!this.props.todos) {
             return (
@@ -57,14 +68,7 @@ class Todos extends Component {
             <React.Fragment>
                 {this.renderContent(this.props.todos)}
                 <hr className="style5"/>
-                <div className="row">
-                    <div className="col-md-6">
-                        <SearchTodosByTagForm/>
-                    </div>
-                    <div className="col-md-6">
-                        <TodoForm onSubmit={this.onSubmit}/>
-                    </div>
-                </div>
+                {this.renderForms()}
             </React.Fragment>
         )
     }

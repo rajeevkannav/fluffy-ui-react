@@ -1,62 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
 import {fetchTodo, updateTodo} from '../actions/actionCreators'
 import SubHeading from '../components/SubHeading';
 import TodoForm from './TodoForm';
-import history from "../history";
-import {toast} from "react-toastify";
 
 class editTodo extends React.Component {
 
-    getTodo(id) {
-        var postData = {};
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-            }
-        };
-
-        axios.get(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
-            .then(response => {
-                this.props.dispatch(fetchTodo(response.data));
-            })
-            .catch(error => console.log(error))
-    }
-
-    onSubmit = formValues => {
-
-        var postData = formValues;
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-            }
-        };
-        const {id} = this.props.match.params;
-        axios.patch(`http://localhost:3000/api/todos/${id}`, postData, axiosConfig)
-            .then(response => {
-                this.props.dispatch(updateTodo(response.data));
-                history.push('/');
-                toast('Todo updated successfully.');
-            })
-            .catch(error => console.log(error))
-
-    };
-
-
     componentDidMount() {
-        this.getTodo(this.props.match.params.id)
+        this.props.fetchTodo(this.props.match.params.id)
     }
 
-    render() {
-        console.log(this.props)
-        if (!this.props.todo.title) {
-            return <div>Loading ...</div>
-        }
+    onSubmit = formValues => this.props.updateTodo(this.props.match.params.id, formValues);
 
+    isPersistedTodo() {
+        return (this.props.todo.title !== undefined)
+    }
+
+    submitButtonTitle() {
+        return this.isPersistedTodo() ? "Update" : "Add"
+    }
+
+    renderContent() {
         return (
             <div>
                 <SubHeading title={'Edit Todo'}/>
@@ -64,6 +28,7 @@ class editTodo extends React.Component {
                     <div className="col-md-6">
                         <TodoForm initialValues={{title: this.props.todo.title}}
                                   backButtonRequired={true}
+                                  submitButtonTitle={this.submitButtonTitle()}
                                   onSubmit={this.onSubmit}/>
                     </div>
                 </div>
@@ -71,12 +36,22 @@ class editTodo extends React.Component {
             </div>
         )
     }
+
+    render() {
+        if (this.isPersistedTodo()) {
+            return this.renderContent()
+        }
+        return <div>Loading ...</div>
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
         todo: state.todos.editingTodo
     }
-}
+};
 
-export default connect(mapStateToProps)(editTodo);
+export default connect(mapStateToProps, {
+    fetchTodo,
+    updateTodo
+})(editTodo);

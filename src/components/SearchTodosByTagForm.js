@@ -1,7 +1,6 @@
 import React from 'react';
 import {Field, reduxForm, reset} from 'redux-form';
-import axios from 'axios';
-import {loadTodos} from '../actions/actionCreators';
+import {todosByTag} from '../actions/actionCreators';
 import BackButton from './BackButton'
 
 class SearchTodosByTagForm extends React.Component {
@@ -27,13 +26,9 @@ class SearchTodosByTagForm extends React.Component {
     };
 
     onSubmit = formValues => {
-        const {name} = formValues;
-        axios.get(`http://localhost:3001/api/tags/${name}/todos`)
-            .then(response => {
-                this.props.dispatch(loadTodos(response.data));
-                this.props.dispatch(reset('SearchTodosByTagForm'));  // requires form name
-            })
-            .catch(error => console.log(error))
+        const {tagName} = formValues;
+        this.props.dispatch(todosByTag(tagName));
+        this.props.dispatch(reset('SearchTodosByTagForm'));
     };
 
     backButton() {
@@ -48,14 +43,13 @@ class SearchTodosByTagForm extends React.Component {
             <React.Fragment>
                 <form className="form-inline" onSubmit={handleSubmit(this.onSubmit)}>
                     <div className="form-group">
-                        <Field name="name"
+                        <Field name="tagName"
                                component={this.renderInput}/>
                     </div>
                     &nbsp;
                     <button className="btn btn-primary col-sm-offset-3">Lookup</button>
                     {this.backButton}
                 </form>
-
             </React.Fragment>
         )
     }

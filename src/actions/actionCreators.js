@@ -6,14 +6,20 @@ import {
     RESTORE_TODO,
     FETCH_TODO,
     UPDATE_TODO,
-    ATTACH_TAG
+    ATTACH_TAG,
+    TODOS_BY_TAG
 } from '../actions/actionTypes';
-
 import todos from '../apis/todos';
+import history from '../history';
 
 export const loadTodos = (archived) => async dispatch => {
     const response = await todos.get(`todos?archived=${archived}`)
     dispatch({type: LOAD_TODOS, todos: response.data})
+};
+
+export const todosByTag = (tagName) => async dispatch => {
+    const response = await todos.get(`http://localhost:3000/api/tags/${tagName}/todos.json`);
+    dispatch({type: TODOS_BY_TAG, todos: response.data})
 };
 
 export const toggleTodo = (id, status) => async dispatch => {
@@ -24,32 +30,34 @@ export const toggleTodo = (id, status) => async dispatch => {
 
 export const deleteTodo = (id) => async dispatch => {
     await todos.delete(`todos/${id}.json`);
-    dispatch({type: DELETE_TODO, id: id})
+    dispatch({type: DELETE_TODO, id: id});
 };
 
 export const restoreTodo = id => async dispatch => {
     await todos.patch(`todos/${id}/restore.json`);
-    dispatch({type: RESTORE_TODO, id: id})
+    dispatch({type: RESTORE_TODO, id: id});
 };
 
-export function fetchTodo(todo) {
-    return {type: FETCH_TODO, todo: todo}
-}
+export const fetchTodo = id => async dispatch => {
+    const response = await todos.get(`todos/${id}.json`);
+    dispatch({type: FETCH_TODO, payload: response.data})
+};
 
-export function updateTodo(todo) {
-    return {type: UPDATE_TODO, todo: todo}
-}
+export const updateTodo = (id, formvalues) => async dispatch => {
+    const response = await todos.patch(`todos/${id}.json`, formvalues);
+    dispatch({type: UPDATE_TODO, payload: response.data});
+    history.push('/');
+};
 
 export const addTodo = formValues => async dispatch => {
     const response = await todos.post('todos', formValues);
-    dispatch({type: ADD_TODO, payload: response.data})
-}
-// export function addTodo(todo) {
-//     return {type: ADD_TODO, todo: todo}
-// }
+    dispatch({type: ADD_TODO, payload: response.data});
+};
 
-export function attachTag(todo) {
-    return {type: ATTACH_TAG, todo: todo}
-}
+export const attachTag = (id, formvalues) => async dispatch => {
+    const response = await todos.put(`todos/${id}/assign_tags`, formvalues);
+    dispatch({type: ATTACH_TAG, payload: response.data});
+    history.push('/');
+};
 
 

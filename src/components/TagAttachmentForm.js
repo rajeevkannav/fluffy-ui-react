@@ -33,7 +33,7 @@ class TagAttachmentForm extends React.Component {
         const {handleSubmit} = this.props;
         return (
             <form className="form-horizontal" onSubmit={handleSubmit(this.onSubmit)}>
-                <div class="form-group">
+                <div className="form-group">
                     <Field name="name"
                            component={this.renderInput}/>
                 </div>

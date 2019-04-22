@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const BackButton = (props) => {
-    console.log('909090909090')
+const BackButton = () => {
     return(
         <React.Fragment>
             &nbsp;

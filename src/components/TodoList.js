@@ -10,6 +10,8 @@ class TodoList extends Component {
             todos.map((todo, index) => {
                 return (
                     <TodoItem todo={todo}
+                              key={index}
+                              index={index}
                               restoreTodo={this.props.restoreTodo}
                               deleteTodo={this.props.deleteTodo}
                               toggleTodo={this.props.toggleTodo}/>

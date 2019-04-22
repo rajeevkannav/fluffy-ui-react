@@ -38,7 +38,7 @@ class TodoForm extends React.Component {
 
     render() {
 
-        const {handleSubmit} = this.props;
+        const {handleSubmit, submitButtonTitle} = this.props;
         return (
             <form className="form-inline" onSubmit={handleSubmit(this.onSubmit)}>
                 <div className="form-group">
@@ -46,7 +46,7 @@ class TodoForm extends React.Component {
                            component={this.renderInput}/>
                 </div>
                 &nbsp;
-                <button className="btn btn-primary col-sm-offset-3">Add Todo</button>
+                <button className="btn btn-primary col-sm-offset-3">{submitButtonTitle}</button>
                 {this.backButton()}
             </form>
         )

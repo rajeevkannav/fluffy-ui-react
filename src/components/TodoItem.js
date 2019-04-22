@@ -4,10 +4,7 @@ import {Link} from "react-router-dom";
 
 class TodoItem extends Component {
 
-    isFinished(todo) {
-        return (todo.status === 'finished')
-    }
-
+    // Actions for not-deleted todoItem
     toggleStatusTodo = (todo) => {
         this.props.toggleTodo({
             id: todo._id.$oid,
@@ -19,16 +16,22 @@ class TodoItem extends Component {
         this.props.deleteTodo(id)
     };
 
+    // Actions for deleted todoItem
     restoreTodo = id => {
-        console.log('inside TodoItem');
         this.props.restoreTodo(id)
     };
 
+    //  status check todoItem
+    isFinished(todo) {
+        return todo.status === 'finished'
+    }
+
     renderActiveTodo(todo) {
+        let hrefLink = '#';
         return (
             <div className="row">
                 <div className="col-md-8">
-                    <a href="javascript:void(0)"
+                    <a href={hrefLink}
                        key={todo.id}
                        id={todo.id}
                        onClick={(e) => this.toggleStatusTodo(todo)}
@@ -42,29 +45,33 @@ class TodoItem extends Component {
                         /> {todo.title} {todo.id}
                     </a>
                     <div className="row">
-                        <TagShow tagsName={todo.tags.map((tag, index) => {return tag.name}) } />
+                        <TagShow tagsName={todo.tags.map((tag, index) => {
+                            return tag.name
+                        })}/>
                     </div>
 
                 </div>
 
 
                 <div className="col-md-4">
-                    <Link to={`/editTodo/${todo._id.$oid}`}>Edit</Link> | <Link to={`/attachTags/${todo._id.$oid}`}>Attach Tag(s)</Link> | <a href="javascript:void(0)" onClick={(e) => this.deleteTodo(todo._id.$oid)}> Delete </a>
+                    <Link to={`/editTodo/${todo._id.$oid}`}>Edit</Link> | <Link to={`/attachTags/${todo._id.$oid}`}>Attach
+                    Tag(s)</Link> | <a href={hrefLink}
+                                       onClick={(e) => this.deleteTodo(todo._id.$oid)}> Delete </a>
                 </div>
             </div>
         )
     }
 
     renderArchivedTodo(todo) {
+        let hrefLink = '#';
         return (
             <div className="row">
                 <div className="col-md-8">
-                    {todo.title}
-                    45. <span className="badge badge-success">{todo.status}</span>
+                    {this.props.index + 1}. {todo.title} <span className="badge badge-success">{todo.status}</span>
                 </div>
 
                 <div className="col-md-4">
-                    <a href='javascript:void(0)'
+                    <a href={hrefLink}
                        onClick={(e) => {
                            this.restoreTodo(todo._id.$oid)
                        }}>
@@ -76,13 +83,13 @@ class TodoItem extends Component {
         )
     }
 
-    renderTodo(todo) {
+    renderTodo() {
+        const {todo} = this.props;
         return (!todo.is_deleted) ? this.renderActiveTodo(todo) : this.renderArchivedTodo(todo)
     }
 
     render() {
-        const {todo} = this.props;
-        return this.renderTodo(todo)
+        return this.renderTodo()
     }
 }
 

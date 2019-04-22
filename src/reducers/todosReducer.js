@@ -6,7 +6,7 @@ import {
     FETCH_TODO,
     UPDATE_TODO,
     ADD_TODO,
-    ATTACH_TAG
+    ATTACH_TAG, TODOS_BY_TAG
 } from '../actions/actionTypes'
 
 const INITIAL_STATE = {
@@ -17,6 +17,8 @@ const INITIAL_STATE = {
 function todosReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case LOAD_TODOS:
+            return {...state, items: action.todos};
+        case TODOS_BY_TAG:
             return {...state, items: action.todos};
         case ADD_TODO:
             return {...state, items: [...state.items, action.payload.todo]};
@@ -34,16 +36,21 @@ function todosReducer(state = INITIAL_STATE, action) {
                 )
             };
         case FETCH_TODO:
-            return {...state, editingTodo: action.todo};
+            return {...state, items: state.items, editingTodo: action.payload};
         case UPDATE_TODO:
-            const items = state.items.map(todo => {
-                if (todo._id.$oid === action.todo._id.$oid) {
-                    return todo;
-                }
-            });
-            return {...state, items, editingItem: {}};
+            const updatedTodo = action.payload.todo;
+            return {
+                ...state,
+                items: state.items.map(todo => (todo._id.$oid === updatedTodo._id.$oid) ? updatedTodo : todo),
+                editingTodo: {}
+            };
         case ATTACH_TAG:
-            return {...state, items, editingItem: {}};
+            const todoWithTags = action.payload;
+            return {
+                ...state,
+                items: state.items.map(todo => (todo._id.$oid === todoWithTags._id.$oid) ? todoWithTags : todo),
+                editingTodo: {}
+            };
         default:
             return state;
     }
